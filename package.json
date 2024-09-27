@@ -18,7 +18,8 @@
     "pinia": "^2.2.2",
     "typescript-eslint": "^8.7.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.5.7",
