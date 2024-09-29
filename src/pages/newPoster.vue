@@ -22,19 +22,15 @@
                 />
             </UFormGroup>
             <div>
-                <UFormGroup
-                    v-if="state.posterRatio.value === 'custom'"
-                    label="Width"
-                    name="Width"
-                >
+                <UFormGroup label="Width" name="Width">
                     <UInput v-model="state.posterX" class="input" />
                 </UFormGroup>
-                <UFormGroup
-                    v-if="state.posterRatio.value === 'custom'"
-                    label="Height"
-                    name="Height"
-                >
-                    <UInput v-model="state.posterY" class="input" />
+                <UFormGroup label="Height" name="Height">
+                    <UInput
+                        v-model="state.posterY"
+                        class="input"
+                        :disabled="state.posterRatio.value !== 'custom'"
+                    />
                 </UFormGroup>
             </div>
             <UButton type="submit">Créer le poster</UButton>
@@ -72,8 +68,9 @@ const state = reactive({
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-    // Do something with event.data
-    console.log(event.data);
+    navigateTo(
+        `/editorPoster?template=${event.data.template}&posterName=${event.data.posterName}&posterDescription=${event.data.posterDescription}&posterX=${event.data.posterX}&posterY=${event.data.posterY}`
+    );
 }
 
 watch(
@@ -81,12 +78,19 @@ watch(
     (ratio) => {
         if (ratio.value === "custom") {
             preview.value.style.width = Number(state.posterX) + "px";
-            preview.value.style.heigth = Number(state.posterY) + "px";
+            preview.value.style.height = Number(state.posterY) + "px";
         } else {
             preview.value.style.width =
-                Number(state.posterRatio.value.split(":")[0]) * 100 + "px";
-            preview.value.style.heigth =
-                Number(state.posterRatio.value.split(":")[1]) * 100 + "px";
+                Number(state.posterRatio.value.split(":")[0]) *
+                    Number(state.posterX) +
+                "px";
+            preview.value.style.height =
+                Number(state.posterRatio.value.split(":")[1]) *
+                    Number(state.posterX) +
+                "px";
+            state.posterY =
+                Number(state.posterRatio.value.split(":")[1]) *
+                Number(state.posterX);
         }
     }
 );
@@ -94,14 +98,30 @@ watch(
 watch(
     () => state.posterX,
     () => {
-        preview.value.style.width = Number(state.posterX) + "px";
+        if (state.posterRatio.value === "custom") {
+            preview.value.style.width = Number(state.posterX) + "px";
+        } else {
+            preview.value.style.width =
+                Number(state.posterRatio.value.split(":")[0]) *
+                    Number(state.posterX) +
+                "px";
+            preview.value.style.height =
+                Number(state.posterRatio.value.split(":")[1]) *
+                    Number(state.posterX) +
+                "px";
+            state.posterY =
+                Number(state.posterRatio.value.split(":")[1]) *
+                Number(state.posterX);
+        }
     }
 );
 
 watch(
     () => state.posterY,
     () => {
-        preview.value.style.height = Number(state.posterY) + "px";
+        if (state.posterRatio.value === "custom") {
+            preview.value.style.height = Number(state.posterY) + "px";
+        }
     }
 );
 </script>
