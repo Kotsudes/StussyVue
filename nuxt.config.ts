@@ -4,6 +4,9 @@ import {fileURLToPath} from "url";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   ssr: false,
+  experimental: {
+    componentIslands: true,
+  },
   devtools: { enabled: true },
   devServer: { host: '0.0.0.0' },
   typescript: {
@@ -36,9 +39,10 @@ export default defineNuxtConfig({
     "@/": fileURLToPath(new URL(".\\src", import.meta.url)),
   },
   modules: [
+    "vue3-pixi-nuxt",
     "@pinia/nuxt",
     "@nuxtjs/eslint-module",
     "@nuxt/ui",
-    "@nuxtjs/tailwindcss",
+    "@nuxtjs/tailwindcss"
   ],
 });

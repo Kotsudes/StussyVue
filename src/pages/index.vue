@@ -3,9 +3,9 @@
     <div class="wrapper">
         <div class="wrapper-menu">
             <span class="sectionTitle">Quickstart</span>
-            <SButton outlined action no-x-borders
-                ><NuxtLink to="/newPoster">Continuer</NuxtLink></SButton
-            >
+            <SButton outlined action no-x-borders>
+                <NuxtLink to="/newPoster">Continuer</NuxtLink>
+            </SButton>
             <SButton outlined action no-x-borders>Ouvrir</SButton>
             <SButton outlined action no-x-borders>Nouveau projet</SButton>
             <span class="sectionTitle">Créer</span>
